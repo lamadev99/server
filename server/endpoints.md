@@ -11,5 +11,10 @@ http://127.0.0.1:8000/api/profile/
 <!-- News (CRUD) -->
 http://127.0.0.1:8000/api/news/
 
+<!-- Filter and Search Sample -->
+http://127.0.0.1:8000/api/news/?search=Politics
+http://127.0.0.1:8000/api/news/?category=Politics&subCategory=Detective
+
+
 <!-- Comment (CRUD) -->
 http://127.0.0.1:8000/api/comment/

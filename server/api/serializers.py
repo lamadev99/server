@@ -115,6 +115,18 @@ class NewsSerializer(serializers.HyperlinkedModelSerializer):
         model=News
         fields="__all__"
 
+class CountSerializer(serializers.HyperlinkedModelSerializer):
+    aId=serializers.ReadOnlyField()
+    class Meta:
+        model=Count
+        fields="__all__"
+
+# class NewsSearchSerializer(serializers.HyperlinkedModelSerializer):
+#     nId=serializers.ReadOnlyField()
+#     class Meta:
+#         model=News
+#         fields="__all__"
+
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
     cId=serializers.ReadOnlyField()
     class Meta:

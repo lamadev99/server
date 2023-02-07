@@ -3,6 +3,7 @@ from PIL import Image
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, fname, lname, tc, password=None, password2=None):
         """
@@ -93,6 +94,8 @@ class News(models.Model):
     tagline = models.CharField(max_length=255)
     is_featured = models.BooleanField(default=False)
     image = models.ImageField(upload_to='news/', null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -103,9 +106,22 @@ class News(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+class Count(models.Model):
+  news = models.ForeignKey(News, on_delete=models.CASCADE)
+  aId = models.AutoField(primary_key=True)
+  views = models.IntegerField(default=0)
+  like = models.IntegerField(default=0)
+  dislike = models.IntegerField(default=0)
+  created_at = models.DateTimeField(auto_now_add=True)
+  updated_at = models.DateTimeField(auto_now=True)
+
+
 class Comment(models.Model):
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
     cId = models.AutoField(primary_key=True)
     fName = models.CharField(max_length=255, blank=False)
     email = models.EmailField(max_length=255, blank=False)
     comment = models.TextField()
     is_save = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)-ebjvo+=5m^nzbnpmha&9b#6@5+**0tgrsy^lxz9#r$@5(5c_'
+SECRET_KEY = 'django-insecure-yq=%esu^543vi%)_!nabf24-sv5v0@r!&qg$lte%lf$gkm2ts^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
     'api',
 ]
 
@@ -70,7 +71,10 @@ REST_FRAMEWORK = {
     # ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 2,
+    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 # JWT Settings
@@ -102,13 +106,22 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'news_portal',
+        'NAME': 'testdb',
         'HOST': 'localhost',
         'PORT': 3307,
         'USER': 'root',
         'PASSWORD': '',
+    },
+    'OPTIONS': {
+        'threaded': True,
+        'init_command': 'SET default_storage_engine=INNODB',
+        'sql_mode': 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE,ONLY_FULL_GROUP_BY',
     }
 }
 

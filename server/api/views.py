@@ -8,6 +8,12 @@ from api.serializers import *
 from api.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.generics import ListAPIView
+from .pagination import MyPagination
+
 
 # Create your views here.
 
@@ -68,14 +74,36 @@ class WriterProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Writer.objects.all()
     serializer_class = WriterPorfileSerializer
+    if queryset.count() > 0:
+        pagination_class = MyPagination
 
 class NewsViewSet(viewsets.ModelViewSet):
+    renderer_classes = [UserRenderer]
     queryset = News.objects.all()
     serializer_class = NewsSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['category', 'subCategory', 'tagline']
+    search_fields = ['^category', '^subCategory', '^title', '^tagline']
+    if queryset.count() > 0:
+        pagination_class = MyPagination
+
+class CountViewSet(viewsets.ModelViewSet):
+  renderer_classes = [UserRenderer]
+  queryset = Count.objects.all()
+  serializer_class = CountSerializer
 
 # class SearchNewsList(ListAPIView):
-
+#     renderer_classes = [UserRenderer]
+#     queryset = News.objects.all()
+#     serializer_class = NewsSearchSerializer
+#     filter_backends = [SearchFilter]
+#     search_fields = ['^category', '^subCategory', '^title', '^tagline']
+#     if queryset.count() > 0:
+#         pagination_class = MyPagination
 
 class CommentViewSet(viewsets.ModelViewSet):
+    renderer_classes = [UserRenderer]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    if queryset.count() > 0:
+        pagination_class = MyPagination
