@@ -1,0 +1,23 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #F1F5F8;
+    scroll-behavior: smooth;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+
+.itemCenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.m-w{
+    width: 1200px;
+}
+.active{
+    color: rgba(2, 39, 207, 0.824);
+    text-decoration-line: underline;
+}
